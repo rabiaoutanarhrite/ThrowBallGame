@@ -18,7 +18,10 @@ public class Target : MonoBehaviour
         if (collision.gameObject.CompareTag("Ball"))
         {
             isLive = false;
-            Debug.Log("Done");
+            GameManager.instance.GiveReaction();
+            GameManager.instance.countTarget++;
+            
         }
     }
+ 
 }
