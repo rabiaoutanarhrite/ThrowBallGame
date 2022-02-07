@@ -18,8 +18,9 @@ public class Target : MonoBehaviour
         if (collision.gameObject.CompareTag("Ball"))
         {
             isLive = false;
-            GameManager.instance.GiveReaction();
+            GameManager.Test();
             GameManager.instance.countTarget++;
+            Destroy(this);
             
         }
     }

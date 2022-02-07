@@ -9,6 +9,10 @@ public class BallsSpawner : MonoBehaviour
 
     [SerializeField] private GameObject ball;
 
+    [SerializeField] private int numSpawns = 0;
+
+    private int countSpawn = 0;
+
     public bool isLaunch;
 
     private void Awake()
@@ -31,10 +35,16 @@ public class BallsSpawner : MonoBehaviour
 
             isLaunch = false;
         }
+
+        LimitSpawn();
     }
-    private void OnMouseUp()
+    
+    private void LimitSpawn()
     {
-        
+        if(countSpawn == numSpawns)
+        {
+            Debug.Log("lose");
+        }
     }
     
     IEnumerator WaitLaunchBall()
@@ -42,5 +52,8 @@ public class BallsSpawner : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Instantiate(ball, this.transform.position, Quaternion.identity);
+
+        countSpawn++;
+
     }
 }
