@@ -26,23 +26,29 @@ public class Ball : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        Vector3 forceInit = (Input.mousePosition - startPos);
-        Vector3 forceV = (new Vector3(forceInit.x, forceInit.y, forceInit.y)) * forceMultiplier;
-
-        if (!isShoot)
+        if (!GameManager.instance.isWin)
         {
-            DrawTrajectory.Instance.UpdateTrajectory(forceV, rb, transform.position);
+            Vector3 forceInit = (Input.mousePosition - startPos);
+            Vector3 forceV = (new Vector3(forceInit.x, forceInit.y, forceInit.y)) * forceMultiplier;
+
+            if (!isShoot)
+            {
+                DrawTrajectory.Instance.UpdateTrajectory(forceV, rb, transform.position);
+            }
         }
     }
 
     private void OnMouseUp()
     {
-        DrawTrajectory.Instance.HideLine();
-        endPos = Input.mousePosition;
-        Shoot(startPos - endPos);
-        BallsSpawner.Instance.isLaunch = true;
+        if (!GameManager.instance.isWin)
+        {
+            DrawTrajectory.Instance.HideLine();
+            endPos = Input.mousePosition;
+            Shoot(startPos - endPos);
+            BallsSpawner.instance.isLaunch = true;
 
-        StartCoroutine(DestroyBall());
+            StartCoroutine(DestroyBall());
+        }
     }
 
     // Update is called once per frame

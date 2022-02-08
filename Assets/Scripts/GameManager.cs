@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] 
     private TextMeshProUGUI reactText;
 
+    public TextMeshProUGUI restBallsTxt;
+
     [SerializeField]
     private TextMeshProUGUI winOrLoseTxt;
 
@@ -24,7 +26,7 @@ public class GameManager : MonoBehaviour
  
     public int countTarget = 0;
 
-    private int temp = 0;
+    public bool isWin = false;
 
     private void Awake()
     {
@@ -51,18 +53,17 @@ public class GameManager : MonoBehaviour
 
     private void CheckTarget()
     {
-        Debug.Log(countTarget);
 
         if (countTarget == targets.Count)
         {
             winOrLoseTxt.gameObject.SetActive(true);
+            isWin = true;
             winOrLoseTxt.text = "Win !";
         }
     }
   
     public void GiveReaction()
     {
-        Debug.Log("What is this");
         reactText.gameObject.SetActive(true);
         reactText.GetComponent<Animator>().enabled = true;
         reactText.text = reactions[Random.Range(0, reactions.Count)];

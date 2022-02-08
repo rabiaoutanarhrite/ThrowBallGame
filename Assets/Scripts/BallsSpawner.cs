@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallsSpawner : MonoBehaviour
 {
 
-    public static BallsSpawner Instance;
+    public static BallsSpawner instance;
 
     [SerializeField] private GameObject ball;
 
@@ -13,25 +13,47 @@ public class BallsSpawner : MonoBehaviour
 
     private int countSpawn = 0;
 
+    private int restBalls;
+
     public bool isLaunch;
 
     private void Awake()
     {
-        Instance = this;
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
     }
 
     private void Start()
     {
+        restBalls = numSpawns;
+        
+        GameManager.instance.restBallsTxt.text = restBalls + "x";
+
         Instantiate(ball, this.transform.position, Quaternion.identity);
+         
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonUp(0) && isLaunch)
         {
-            Debug.Log("hhh");
+            Debug.Log("Rest Of Balls: " + restBalls);
 
-            StartCoroutine(WaitLaunchBall());
+            countSpawn++;
+
+            restBalls--;
+            GameManager.instance.restBallsTxt.text = restBalls + "x";
+
+            if (restBalls != 0)
+            {
+                StartCoroutine(WaitLaunchBall());
+            }
 
             isLaunch = false;
         }
@@ -52,8 +74,6 @@ public class BallsSpawner : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         Instantiate(ball, this.transform.position, Quaternion.identity);
-
-        countSpawn++;
-
+        
     }
 }
