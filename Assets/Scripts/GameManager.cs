@@ -56,9 +56,7 @@ public class GameManager : MonoBehaviour
 
         if (countTarget == targets.Count)
         {
-            winOrLoseTxt.gameObject.SetActive(true);
-            isWin = true;
-            winOrLoseTxt.text = "Win !";
+            StartCoroutine(Winning());
         }
     }
   
@@ -85,7 +83,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+    IEnumerator Winning()
+    {
+        yield return new WaitForSeconds(4f);
 
+        winOrLoseTxt.gameObject.SetActive(true);
+        isWin = true;
+        winOrLoseTxt.text = "Win !";
+    }
 
 
 }
