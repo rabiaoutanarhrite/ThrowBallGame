@@ -54,9 +54,9 @@ public class BallsSpawner : MonoBehaviour
             {
                 StartCoroutine(WaitLaunchBall());
             }
-
+             
             isLaunch = false;
-        }
+        } 
 
         LimitSpawn();
     }
@@ -65,7 +65,7 @@ public class BallsSpawner : MonoBehaviour
     {
         if(countSpawn == numSpawns)
         {
-            Debug.Log("lose");
+            StartCoroutine(LoseCheck());
         }
     }
     
@@ -75,5 +75,17 @@ public class BallsSpawner : MonoBehaviour
 
         Instantiate(ball, this.transform.position, Quaternion.identity);
         
+    }
+
+    IEnumerator LoseCheck()
+    {
+        yield return new WaitForSeconds(5f);
+
+        if (!GameManager.instance.isWin)
+        {
+            Debug.Log("lose");
+            GameManager.instance.Losing();
+        }
+
     }
 }

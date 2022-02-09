@@ -75,6 +75,12 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void Losing()
+    {
+        winOrLoseTxt.gameObject.SetActive(true);
+        winOrLoseTxt.text = "Game Over!";
+    }
+
     IEnumerator HideText()
     {
         yield return new WaitForSeconds(3f);
